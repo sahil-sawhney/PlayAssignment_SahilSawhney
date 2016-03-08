@@ -1,0 +1,99 @@
+@(searchForm:Form[SearchEmployee], employeeList:List[Employee])(implicit message: Messages, flash:Flash )
+
+@import b3.vertical.fieldConstructor
+
+@views.html.main("Dashboard") {
+
+
+<div class="row">
+    <div class="col-md-3 col-sm-2 col-xs-1"></div>
+    @if(searchForm.globalErrors != Nil){
+    <div class=" myFlashRed col-md-6 col-sm-8 col-xs-10">@searchForm.globalErrors.map { error =>@error.message}</div>
+    }
+    @if(flash.get("error").isDefined){
+    <div class=" myFlashRed col-md-6 col-sm-8 col-xs-10">@flash.get("error")</div>
+    }
+    @if(flash.get("success").isDefined){
+    <div class=" myFlashGreen col-md-6 col-sm-8 col-xs-10">@flash.get("success")</div>
+    }
+    <div class="col-md-3 col-sm-2 col-xs-1"></div>
+</div>
+<br>
+
+    <div class="row">
+        <div class="col-md-8 col-sm-8 col-xs-12">
+            <div class="col-md-1 col-sm-1 col-xs-2"></div>
+            <div class="col-md-5 col-sm-6 col-xs-8">
+                @b3.form(routes.EmployeeController.filterEmployee) {
+
+                 @b3.text(searchForm("name"), '_label -> "Name", 'placeholder -> "Employee Name")
+                 <div style="text-align:center">
+                     @b3.submit('class -> "btn btn-info"){Search}
+                 </div>
+            </div>
+            <div class="col-md-2 col-sm-1 col-xs-2"></div>
+         }
+        </div>
+
+        <div class="col-md-4 col-sm-4 col-xs-12" style="text-align:center">
+            <a class="btn btn-success" href="@routes.EmployeeController.addView">+ Add New Employee</a>
+        </div>
+    </div>
+
+    <br>
+
+    @if(employeeList.isEmpty){
+        <div class="col-md-3 col-sm-2 col-xs-1"></div>
+        <div class="row col-md-6 col-sm-8 col-xs-10" style="color:red; text-align:center; font-size:20px">
+            No Record Found ...
+        </div>
+        <div class="col-md-3 col-sm-2 col-xs-1"></div>
+    } else {
+
+    <div class="container">
+        <div class="row">
+             @employeeList.map { emp =>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading" style="font-size:15px">
+                            @emp.name
+                        </div>
+                        <div class="panel-body" style="background:#e5e5e5; font-size:12px">
+                            <div class="row" >
+                                <div class="col-md-5 col-sm-5 col-xs-5" style="color:purple">Address :</div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">@emp.address</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-5 col-xs-5" style="color:purple">Date Of Birth :</div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">@emp.dob</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-5 col-xs-5" style="color:purple">Joining Date :</div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">@emp.joiningDate</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 col-sm-5 col-xs-5" style="color:purple">Designation :</div>
+                                <div class="col-md-7 col-sm-7 col-xs-7">@emp.designation</div>
+                            </div>
+
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-6" style="text-align:center">
+                                    <a class="btn btn-success" href="@routes.EmployeeController.editView(emp.id)">Edit</a>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6" style="text-align:center">
+                                    <a class="btn btn-danger" href="@routes.EmployeeController.deleteEmployee(emp.id)">Delete</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+             }
+            }
+        </div>
+    </div>
+
+
+
+}

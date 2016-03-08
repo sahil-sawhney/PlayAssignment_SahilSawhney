@@ -1,0 +1,40 @@
+.myFlashRed{
+     pading:10px;
+     text-align:center;
+     font-size:20px;
+     background:#eec6d0;
+     color:red;
+}
+
+.myFlashGreen{
+     pading:10px;
+     text-align:center;
+     font-size:20px;
+     background:#a6e199;
+     color:green;
+}
+
+.myHeader{
+    background:#ff6700;
+	color: white;
+	font-size: 60px;
+	font-family:Verdana, Geneva, sans-serif
+}
+
+.page-title{
+    background:#815381;
+    color:White;
+    font-size:25px;
+    text-align:center;
+}
+
+.myFooter{
+    background:#3c3c3c;
+    font-size:15px;
+    text-align:center;
+}
+
+.lion-image{
+    height: 150px;
+}
+

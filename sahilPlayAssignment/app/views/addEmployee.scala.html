@@ -1,0 +1,43 @@
+@(userForm:Form[Employee])(implicit message: Messages, flash:Flash )
+
+@import b3.vertical.fieldConstructor
+
+@views.html.main("Add New Employee") {
+
+<div class="row">
+    <div class="col-md-3 col-sm-2 col-xs-1"></div>
+    @if(userForm.globalErrors != Nil){
+    <div class=" myFlashRed col-md-6 col-sm-8 col-xs-10">@userForm.globalErrors.map { error =>@error.message}</div>
+    }
+    @if(flash.get("success").isDefined){
+    <div class=" myFlashGreen col-md-6 col-sm-8 col-xs-10">@flash.get("success")</div>
+    }
+    <div class="col-md-3 col-sm-2 col-xs-1"></div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-md-2 col-sm-2 col-xs-1"></div>
+    <div class="col-md-6 col-sm-6 col-xs-10">
+        @b3.form(routes.EmployeeController.addEmployeeSubmitForm) {
+
+            <div hidden="true">
+                @b3.text(userForm("id"), '_label -> "Id", 'placeholder -> "Employee Id",'readonly -> true, 'value -> (new EmployeeModel).findUniqueId)
+            </div>
+            @b3.text(userForm("name"), '_label -> "Name", 'placeholder -> "Employee Name")
+            @b3.text(userForm("address"), '_label -> "Address", 'placeholder -> "Employee Address")
+            @b3.text(userForm("dob"), '_label -> "Date Of Birth", 'placeholder -> "Enter Date (dd-MM-yy)")
+            @b3.text(userForm("joiningDate"), '_label -> "Joining Date", 'placeholder -> "Enter Date (dd-MM-yy)")
+            @b3.text(userForm("designation"), '_label -> "Designation", 'placeholder -> "Employee Designation")
+            <br>
+            <div class="row" style="text-align:center">
+                <div class="col-md-6 col-sm-6 col-xs-10">@b3.submit('class -> "btn btn-primary"){+ Add}</div>
+                <div class="col-md-4 col-sm-4 col-xs-12">
+                    <a class="btn btn-primary" href="@routes.EmployeeController.dashboardView">Cancel</a>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-1"></div>
+</div>
+}

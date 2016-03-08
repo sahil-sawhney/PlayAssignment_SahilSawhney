@@ -1,0 +1,52 @@
+@(userForm:Form[Employee], employeeObj: Employee)(implicit message: Messages, flash:Flash )
+
+@import b3.vertical.fieldConstructor
+
+@views.html.main("Edit Employee Credentials") {
+
+<div class="row">
+    <div class="col-md-3 col-sm-2 col-xs-1"></div>
+    @if(userForm.globalErrors != Nil){
+    <div class=" myFlashRed col-md-6 col-sm-8 col-xs-10">@userForm.globalErrors.map { error =>@error.message}</div>
+    }
+    @if(flash.get("success").isDefined){
+    <div class=" myFlashGreen col-md-6 col-sm-8 col-xs-10">@flash.get("success")</div>
+    }
+    <div class="col-md-3 col-sm-2 col-xs-1"></div>
+</div>
+<br>
+
+<div class=row" style="text-align:center">
+    <div class="col-md-9 col-sm-9 col-xs-2 "></div>
+    <div class="col-md-2 col-sm-2 col-xs-8">
+        <a class="btn btn-danger" href="@routes.EmployeeController.deleteEmployee(employeeObj.id)">Delete Employee</a>
+    </div>
+    <div class="col-md-1 col-sm-1 col-xs-2 "></div>
+</div>
+<br><br><br><br>
+
+<div class="row">
+    <div class="col-md-2 col-sm-2 col-xs-1"></div>
+    <div class="col-md-6 col-sm-6 col-xs-10">
+    @b3.form(routes.EmployeeController.editRecord) {
+
+        <div hidden="true">
+            @b3.text(userForm("id"), '_label -> "Id",'readonly -> true, 'value -> employeeObj.id)
+        </div>
+        @b3.text(userForm("name"), '_label -> "Name", 'value -> employeeObj.name)
+        @b3.text(userForm("address"), '_label -> "Address", 'value -> employeeObj.address)
+        @b3.date(userForm("dob"), '_label -> "Date Of Birth", 'value -> employeeObj.dob)
+        @b3.date(userForm("joiningDate"), '_label -> "Joining Date", 'value -> employeeObj.joiningDate)
+        @b3.text(userForm("designation"), '_label -> "Designation", 'value -> employeeObj.designation)
+        <br>
+        <div class="row" style="text-align:center">
+            <div class="col-md-6 col-sm-6 col-xs-6">@b3.submit('class -> "btn btn-primary"){Save}</div>
+            <div class="col-md-4 col-sm-4 col-xs-6">
+                <a class="btn btn-primary" href="@routes.EmployeeController.dashboardView">Cancel</a>
+            </div>
+        </div>
+    }
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-1"></div>
+</div>
+}
